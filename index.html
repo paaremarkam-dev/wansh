@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="google-site-verification" content="-9PfdBKmVmOrMilaME26Vvlz-QbGRKcICMvX8eRT8Js" /></head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexusPlay — Gaming Universe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --neon: #00f5ff;
+      --neon2: #ff2d78;
+      --neon3: #c800ff;
+      --gold: #ffd700;
+      --dark: #080c14;
+      --darker: #040810;
+      --surface: #0d1526;
+      --surface2: #111d35;
+      --text: #e8f4ff;
+      --muted: #7a9bc0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--darker);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── CURSOR ─── */
+    body { cursor: none; }
+    #cursor {
+      width: 20px; height: 20px;
+      border: 2px solid var(--neon);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+    }
+    #cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--neon);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(4, 8, 16, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+    }
+
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--neon);
+      text-shadow: 0 0 20px rgba(0,245,255,0.5);
+      text-decoration: none;
+    }
+    .logo span { color: var(--neon2); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--neon); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon), var(--neon3));
+      color: #000;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,245,255,0.4);
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 5% 4rem;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,245,255,0.1);
+      border: 1px solid rgba(0,245,255,0.3);
+      color: var(--neon);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 0.4rem 1.2rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title .line1 { color: var(--text); display: block; }
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--neon), var(--neon2), var(--neon3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0,245,255,0.3));
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(0,245,255,0.4);
+      color: var(--neon);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 0.7rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      background: rgba(0,245,255,0.08);
+      box-shadow: 0 0 20px rgba(0,245,255,0.2);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(0,245,255,0.1);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--neon);
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    /* ─── SECTION ─── */
+    section { padding: 6rem 5%; }
+
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    /* ─── GAMES GRID ─── */
+    #games { background: var(--surface); }
+    #games .header { margin-bottom: 3rem; }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .game-card {
+      background: var(--dark);
+      border: 1px solid rgba(0,245,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,245,255,0.3);
+      box-shadow: 0 16px 40px rgba(0,245,255,0.08);
+    }
+    .game-card:hover .card-overlay { opacity: 1; }
+
+    .card-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,245,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .play-btn {
+      width: 56px; height: 56px;
+      background: var(--neon);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .card-body { padding: 1.2rem; }
+
+    .card-genre {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--neon2);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .badge-hot {
+      background: rgba(255,45,120,0.15);
+      border: 1px solid rgba(255,45,120,0.3);
+      color: var(--neon2);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* ─── MINI GAME ─── */
+    #play {
+      background: var(--darker);
+      text-align: center;
+    }
+
+    #play .header { margin-bottom: 2.5rem; }
+
+    .game-arena {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    #game-canvas-wrap {
+      background: var(--surface);
+      border: 1px solid rgba(0,245,255,0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+    }
+
+    .game-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .game-score-box {
+      background: var(--surface);
+      border: 1px solid rgba(0,245,255,0.15);
+      border-radius: 6px;
+      padding: 0.5rem 1.5rem;
+      text-align: center;
+    }
+    .game-score-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+    .game-score-val {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--neon);
+    }
+    .score-hi { color: var(--gold) !important; }
+
+    .game-hint {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* ─── LEADERBOARD ─── */
+    #leaderboard { background: var(--surface); }
+    .leaderboard-table {
+      max-width: 700px;
+      margin: 2.5rem auto 0;
+    }
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      background: var(--dark);
+      border: 1px solid rgba(0,245,255,0.06);
+      transition: border-color 0.2s;
+    }
+    .lb-row:hover { border-color: rgba(0,245,255,0.2); }
+    .lb-rank {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      min-width: 2rem;
+      text-align: center;
+    }
+    .rank-1 { color: var(--gold); }
+    .rank-2 { color: #c0c0c0; }
+    .rank-3 { color: #cd7f32; }
+    .lb-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface2);
+      flex-shrink: 0;
+    }
+    .lb-name {
+      flex: 1;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .lb-game { color: var(--muted); font-size: 0.85rem; }
+    .lb-score {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      color: var(--neon);
+    }
+
+    /* ─── NEWSLETTER ─── */
+    #newsletter {
+      background: linear-gradient(135deg, var(--darker) 0%, rgba(0,245,255,0.03) 50%, var(--darker) 100%);
+      text-align: center;
+    }
+    .newsletter-box {
+      max-width: 500px;
+      margin: 2rem auto 0;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .newsletter-input {
+      flex: 1;
+      min-width: 220px;
+      background: var(--surface);
+      border: 1px solid rgba(0,245,255,0.2);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input:focus { border-color: var(--neon); }
+    .newsletter-input::placeholder { color: var(--muted); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--darker);
+      border-top: 1px solid rgba(0,245,255,0.08);
+      padding: 3rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--neon);
+      text-shadow: 0 0 16px rgba(0,245,255,0.3);
+    }
+    .footer-copy { color: var(--muted); font-size: 0.85rem; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--neon); }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--darker); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,245,255,0.3); border-radius: 3px; }
+
+    /* ─── MOBILE ─── */
+    @media(max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">NEXUS<span>PLAY</span></a>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#play">Play Now</a></li>
+    <li><a href="#leaderboard">Leaderboard</a></li>
+    <li><a href="#newsletter">Join</a></li>
+  </ul>
+  <button class="btn-primary" onclick="document.getElementById('play').scrollIntoView({behavior:'smooth'})">Play Free</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">🎮 New Season Live — Season 7</div>
+    <h1 class="hero-title">
+      <span class="line1">Enter the</span>
+      <span class="line2">Gaming Universe</span>
+    </h1>
+    <p class="hero-sub">Play. Compete. Conquer. Join millions of gamers in the ultimate online gaming experience with real-time multiplayer action.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('play').scrollIntoView({behavior:'smooth'})">▶ Play Now — It's Free</button>
+      <button class="btn-ghost" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Browse Games</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num" id="stat1">0</div><div class="stat-label">Players Online</div></div>
+      <div class="stat-item"><div class="stat-num" id="stat2">0</div><div class="stat-label">Games Available</div></div>
+      <div class="stat-item"><div class="stat-num" id="stat3">0</div><div class="stat-label">Tournaments</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES GRID -->
+<section id="games">
+  <div class="header">
+    <div class="section-tag">Featured</div>
+    <h2 class="section-title">Top Games</h2>
+    <p class="section-sub">Dive into our most popular titles and start playing instantly.</p>
+  </div>
+  <div class="games-grid" id="gamesGrid"></div>
+</section>
+
+<!-- MINI GAME -->
+<section id="play">
+  <div class="header">
+    <div class="section-tag">Play Instantly</div>
+    <h2 class="section-title">Space Shooter</h2>
+    <p class="section-sub" style="margin: 0 auto; text-align:center;">Use ← → Arrow Keys to move. SPACE to shoot. Survive as long as you can!</p>
+  </div>
+  <div class="game-arena">
+    <div id="game-canvas-wrap">
+      <canvas id="gameCanvas" width="600" height="360"></canvas>
+    </div>
+    <div class="game-controls">
+      <div class="game-score-box"><div class="game-score-label">Score</div><div class="game-score-val" id="scoreDisp">0</div></div>
+      <button class="btn-primary" id="startBtn" onclick="startGame()">▶ Start Game</button>
+      <div class="game-score-box"><div class="game-score-label">Best</div><div class="game-score-val score-hi" id="hiDisp">0</div></div>
+    </div>
+    <div class="game-hint" id="gameHint">Press START to begin — Arrow keys to move, Space to shoot</div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section id="leaderboard" style="text-align:center;">
+  <div class="section-tag">Champions</div>
+  <h2 class="section-title">Global Leaderboard</h2>
+  <p class="section-sub" style="margin: 0 auto;">Top players from around the world this season.</p>
+  <div class="leaderboard-table" id="lbTable"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-tag">Stay Updated</div>
+  <h2 class="section-title">Join the Squad</h2>
+  <p class="section-sub" style="margin: 0 auto;">Get notified about new games, tournaments and exclusive rewards.</p>
+  <div class="newsletter-box">
+    <input class="newsletter-input" type="email" placeholder="Enter your email" id="emailInput"/>
+    <button class="btn-primary" onclick="subscribe()">Join Now</button>
+  </div>
+  <p id="subMsg" style="color: #00f5ff; margin-top:1rem; font-weight:600; display:none;">✓ You're in! Welcome to the squad.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NEXUSPLAY</div>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Support</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 NexusPlay. All rights reserved.</p>
+</footer>
+
+<script>
+/* ── Custom Cursor ── */
+const cur = document.getElementById('cursor');
+const dot = document.getElementById('cursor-dot');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = (mx-3) + 'px'; dot.style.top = (my-3) + 'px';
+  cur.style.left = (mx-10) + 'px'; cur.style.top = (my-10) + 'px';
+});
+
+/* ── Hero Canvas Particles ── */
+const hCanvas = document.getElementById('hero-canvas');
+const hCtx = hCanvas.getContext('2d');
+let particles = [];
+
+function resizeHero() {
+  hCanvas.width = hCanvas.offsetWidth;
+  hCanvas.height = hCanvas.offsetHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+function Particle() {
+  this.x = Math.random() * hCanvas.width;
+  this.y = Math.random() * hCanvas.height;
+  this.vx = (Math.random()-0.5) * 0.6;
+  this.vy = (Math.random()-0.5) * 0.6;
+  this.size = Math.random() * 2 + 0.5;
+  this.alpha = Math.random() * 0.7 + 0.2;
+  this.color = ['#00f5ff','#ff2d78','#c800ff'][Math.floor(Math.random()*3)];
+}
+for(let i=0;i<80;i++) particles.push(new Particle());
+
+function drawHero() {
+  hCtx.clearRect(0,0,hCanvas.width,hCanvas.height);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=hCanvas.width;
+    if(p.x>hCanvas.width) p.x=0;
+    if(p.y<0) p.y=hCanvas.height;
+    if(p.y>hCanvas.height) p.y=0;
+    hCtx.globalAlpha = p.alpha;
+    hCtx.fillStyle = p.color;
+    hCtx.beginPath();
+    hCtx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    hCtx.fill();
+  });
+  particles.forEach((a,i) => {
+    particles.slice(i+1).forEach(b => {
+      const dx = a.x-b.x, dy = a.y-b.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < 100) {
+        hCtx.globalAlpha = (1-dist/100)*0.15;
+        hCtx.strokeStyle = '#00f5ff';
+        hCtx.lineWidth = 0.5;
+        hCtx.beginPath();
+        hCtx.moveTo(a.x,a.y);
+        hCtx.lineTo(b.x,b.y);
+        hCtx.stroke();
+      }
+    });
+  });
+  hCtx.globalAlpha = 1;
+  requestAnimationFrame(drawHero);
+}
+drawHero();
+
+/* ── Stat Counter ── */
+function animCount(el, target, suffix='') {
+  let cur = 0;
+  const step = target/80;
+  const iv = setInterval(() => {
+    cur = Math.min(cur+step, target);
+    el.textContent = Math.round(cur).toLocaleString() + suffix;
+    if(cur>=target) clearInterval(iv);
+  }, 20);
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      animCount(document.getElementById('stat1'), 48253, '+');
+      animCount(document.getElementById('stat2'), 350, '+');
+      animCount(document.getElementById('stat3'), 128, '');
+      obs.disconnect();
+    }
+  });
+}, { threshold: 0.4 });
+obs.observe(document.querySelector('#hero'));
+
+/* ── Games Data ── */
+const gamesData = [
+  { emoji:'🚀', color:'#0a1a2e', genre:'Shooter', title:'Cosmic Assault', rating:4.8, players:'12.4k', hot:true },
+  { emoji:'⚔️', color:'#1a0a2e', genre:'RPG', title:'Dragon Chronicles', rating:4.7, players:'8.1k', hot:false },
+  { emoji:'🏎️', color:'#0a1e10', genre:'Racing', title:'Turbo Drive X', rating:4.6, players:'15.2k', hot:true },
+  { emoji:'🧟', color:'#1e0a0a', genre:'Horror', title:'Dead Zone: Rise', rating:4.5, players:'6.7k', hot:false },
+  { emoji:'🏆', color:'#1e1a0a', genre:'Sports', title:'Ultimate Arena', rating:4.9, players:'22.1k', hot:true },
+  { emoji:'🔮', color:'#0a1e1e', genre:'Puzzle', title:'Mystic Riddles', rating:4.4, players:'5.3k', hot:false },
+];
+
+const grid = document.getElementById('gamesGrid');
+gamesData.forEach(g => {
+  const card = document.createElement('div');
+  card.className = 'game-card';
+  card.innerHTML = `
+    <div class="card-thumb" style="background:${g.color}">
+      <span>${g.emoji}</span>
+      <div class="card-overlay"><div class="play-btn">▶</div></div>
+    </div>
+    <div class="card-body">
+      <div class="card-genre">${g.genre}</div>
+      <div class="card-title">${g.title}</div>
+      <div class="card-meta">
+        <span class="rating">★ ${g.rating}</span>
+        <span style="font-size:0.8rem">${g.players} online</span>
+        ${g.hot ? '<span class="badge-hot">Hot</span>' : ''}
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+/* ── Mini Game ── */
+const gc = document.getElementById('gameCanvas');
+const gctx = gc.getContext('2d');
+let ship, bullets, enemies, score, hiScore=0, raf, gameRunning=false, level=1;
+const keys = {};
+document.addEventListener('keydown', e => keys[e.code]=true);
+document.addEventListener('keyup', e => keys[e.code]=false);
+
+function initGame() {
+  ship = { x:300, y:310, w:30, h:20, speed:5 };
+  bullets = [];
+  enemies = [];
+  score = 0;
+  level = 1;
+  spawnEnemies();
+}
+
+function spawnEnemies() {
+  for(let row=0;row<2;row++) {
+    for(let col=0;col<7;col++) {
+      enemies.push({ x: 40+col*76, y: 30+row*44, w:28, h:20, vx:0.6+level*0.2, vy:0, alive:true, emoji:['👾','🛸','👽'][row%3] });
+    }
+  }
+}
+
+let bulletCooldown = 0;
+function gameLoop() {
+  gctx.fillStyle = '#080c14';
+  gctx.fillRect(0,0,600,360);
+
+  // Stars
+  gctx.fillStyle='rgba(255,255,255,0.5)';
+  for(let i=0;i<30;i++){
+    const sx = (i*73)%600, sy=(i*47+Date.now()*0.02)%360;
+    gctx.fillRect(sx,sy,1,1);
+  }
+
+  // Move ship
+  if(keys['ArrowLeft'] && ship.x > 15) ship.x -= ship.speed;
+  if(keys['ArrowRight'] && ship.x < 585) ship.x += ship.speed;
+
+  // Shoot
+  bulletCooldown--;
+  if(keys['Space'] && bulletCooldown<=0) {
+    bullets.push({x:ship.x, y:ship.y-10, speed:8});
+    bulletCooldown = 15;
+  }
+
+  // Update bullets
+  bullets = bullets.filter(b => {
+    b.y -= b.speed;
+    gctx.fillStyle = '#00f5ff';
+    gctx.shadowBlur = 8;
+    gctx.shadowColor = '#00f5ff';
+    gctx.fillRect(b.x-2, b.y, 4, 12);
+    gctx.shadowBlur = 0;
+    return b.y > -10;
+  });
+
+  // Move enemies
+  let reverseX = false;
+  enemies.forEach(e => {
+    e.x += e.vx;
+    if(e.x > 580 || e.x < 10) reverseX = true;
+  });
+  if(reverseX) {
+    enemies.forEach(e => { e.vx *= -1; e.y += 14; });
+  }
+
+  // Draw enemies
+  enemies.forEach(e => {
+    gctx.font = '18px serif';
+    gctx.textAlign = 'center';
+    gctx.fillText(e.emoji, e.x, e.y+16);
+  });
+
+  // Bullet-enemy collision
+  bullets.forEach((b, bi) => {
+    enemies.forEach((e, ei) => {
+      if(b.x>e.x-14 && b.x<e.x+14 && b.y>e.y && b.y<e.y+20) {
+        bullets.splice(bi,1);
+        enemies.splice(ei,1);
+        score += 10;
+        document.getElementById('scoreDisp').textContent = score;
+      }
+    });
+  });
+
+  // Next wave
+  if(enemies.length === 0) {
+    level++;
+    spawnEnemies();
+  }
+
+  // Check enemy reach bottom
+  if(enemies.some(e => e.y > 330)) {
+    endGame(); return;
+  }
+
+  // Draw ship
+  gctx.fillStyle = '#00f5ff';
+  gctx.shadowBlur = 16; gctx.shadowColor = '#00f5ff';
+  gctx.beginPath();
+  gctx.moveTo(ship.x, ship.y-14);
+  gctx.lineTo(ship.x-14, ship.y+10);
+  gctx.lineTo(ship.x+14, ship.y+10);
+  gctx.closePath();
+  gctx.fill();
+  gctx.shadowBlur = 0;
+
+  // Score bar
+  gctx.fillStyle='rgba(0,0,0,0.4)';
+  gctx.fillRect(0,0,600,28);
+  gctx.fillStyle='#00f5ff';
+  gctx.font='12px Orbitron, monospace';
+  gctx.textAlign='left';
+  gctx.fillText('SCORE: '+score, 12, 18);
+  gctx.textAlign='right';
+  gctx.fillStyle='#ffd700';
+  gctx.fillText('LVL '+level, 590, 18);
+
+  raf = requestAnimationFrame(gameLoop);
+}
+
+function startGame() {
+  if(gameRunning) return;
+  gameRunning = true;
+  document.getElementById('startBtn').textContent = '■ Running...';
+  document.getElementById('gameHint').textContent = '← → Arrow Keys to move | SPACE to shoot | Survive!';
+  initGame();
+  gameLoop();
+}
+
+function endGame() {
+  cancelAnimationFrame(raf);
+  gameRunning = false;
+  if(score>hiScore){ hiScore=score; document.getElementById('hiDisp').textContent=hiScore; }
+  gctx.fillStyle='rgba(8,12,20,0.85)';
+  gctx.fillRect(0,0,600,360);
+  gctx.fillStyle='#ff2d78';
+  gctx.font='bold 32px Orbitron, monospace';
+  gctx.textAlign='center';
+  gctx.fillText('GAME OVER', 300, 160);
+  gctx.fillStyle='#00f5ff';
+  gctx.font='18px Orbitron, monospace';
+  gctx.fillText('Score: '+score, 300, 200);
+  gctx.fillStyle='#7a9bc0';
+  gctx.font='14px Rajdhani, sans-serif';
+  gctx.fillText('Click START to play again', 300, 240);
+  document.getElementById('startBtn').textContent = '▶ Play Again';
+  document.getElementById('scoreDisp').textContent = score;
+}
+
+// Draw idle screen
+gctx.fillStyle='#080c14';
+gctx.fillRect(0,0,600,360);
+gctx.fillStyle='#00f5ff';
+gctx.font='20px Orbitron, monospace';
+gctx.textAlign='center';
+gctx.fillText('🚀 SPACE SHOOTER', 300, 165);
+gctx.fillStyle='#7a9bc0';
+gctx.font='14px Rajdhani, sans-serif';
+gctx.fillText('Press START to begin', 300, 205);
+
+/* ── Leaderboard ── */
+const leaders = [
+  { rank:1, avatar:'🦅', name:'ShadowKing_99', game:'Space Shooter', score:'98,450' },
+  { rank:2, avatar:'🐉', name:'DragonSlayer_X', game:'Dragon Chronicles', score:'87,200' },
+  { rank:3, avatar:'🔥', name:'BlazeFury', game:'Turbo Drive X', score:'76,800' },
+  { rank:4, avatar:'⚡', name:'ThunderBolt', game:'Cosmic Assault', score:'65,400' },
+  { rank:5, avatar:'🎯', name:'NightHawk_007', game:'Ultimate Arena', score:'54,100' },
+];
+const lbTable = document.getElementById('lbTable');
+leaders.forEach(l => {
+  const rankClass = l.rank<=3 ? `rank-${l.rank}` : '';
+  lbTable.innerHTML += `
+  <div class="lb-row">
+    <div class="lb-rank ${rankClass}">${l.rank<=3 ? ['🥇','🥈','🥉'][l.rank-1] : l.rank}</div>
+    <div class="lb-avatar">${l.avatar}</div>
+    <div>
+      <div class="lb-name">${l.name}</div>
+      <div class="lb-game">${l.game}</div>
+    </div>
+    <div class="lb-score">${l.score}</div>
+  </div>`;
+});
+
+/* ── Subscribe ── */
+function subscribe() {
+  const v = document.getElementById('emailInput').value.trim();
+  if(!v || !v.includes('@')) { alert('Please enter a valid email.'); return; }
+  document.getElementById('subMsg').style.display='block';
+  document.getElementById('emailInput').value='';
+}
+</script>
+</body>
+</html>
