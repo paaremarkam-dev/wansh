@@ -1,1 +1,683 @@
 
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wansh.gaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --neon-cyan: #00f5ff;
+    --neon-pink: #ff0080;
+    --neon-purple: #8b00ff;
+    --dark-bg: #050810;
+    --card-bg: #0a0f1e;
+    --text-main: #e0e8ff;
+  }
+
+  body {
+    background: var(--dark-bg);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body:
+
+  /* NAVBAR */
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    border-bottom: 1px solid rgba(0,245,255,0.2);
+    background: rgba(5,8,16,0.85);
+    backdrop-filter: blur(10px);
+  }
+
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 20px rgba(0,245,255,0.8);
+    letter-spacing: 3px;
+  }
+
+  .logo span { color: var(--neon-pink); text-shadow: 0 0 20px rgba(255,0,128,0.8); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+
+  nav ul li a {
+    color: #8899bb;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav ul li a:hover { color: var(--neon-cyan); }
+
+  .nav-login-btn {
+    background: transparent;
+    border: 1.5px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    padding: 10px 28px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .nav-login-btn:hover {
+    background: rgba(0,245,255,0.15);
+    box-shadow: 0 0 20px rgba(0,245,255,0.5);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 100px 20px 60px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,0,128,0.15);
+    border: 1px solid rgba(255,0,128,0.4);
+    color: var(--neon-pink);
+    padding: 6px 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(36px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--neon-cyan) 50%, var(--neon-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: #8899bb;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    border: none;
+    color: white;
+    padding: 16px 40px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,0,128,0.5);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1.5px solid rgba(0,245,255,0.5);
+    color: var(--neon-cyan);
+    padding: 16px 40px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0,245,255,0.1);
+    box-shadow: 0 0 20px rgba(0,245,255,0.3);
+  }
+
+  /* STATS */
+  .stats {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding: 40px 60px;
+    border-top: 1px solid rgba(0,245,255,0.1);
+    border-bottom
+  }
+
+  .section-title span { color: var(--neon-cyan); }
+
+  .section-sub {
+    color: #667799;
+    font-size: 15px;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .game-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,245,255,0.12);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,245,255,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .game-card:hover { border-color: rgba(0,245,255,0.4); transform: translateY(-4px); }
+  .game-card:hover::before { opacity: 1; }
+
+  .game-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+
+  .game-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #d0d8f0;
+  }
+
+  .game-card p { font-size: 13px; color: #667799; line-height: 1.5; margin-bottom: 16px; }
+
+  .game-tag {
+    display: inline-block;
+    background: rgba(0,245,255,0.1);
+    border: 1px solid rgba(0,245,255,0.25);
+    color: var(--neon-cyan);
+    padding: 3px 12px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .play-btn {
+    width: 100%;
+    margin-top: 16px;
+    background: transparent;
+    border: 1px solid rgba(255,0,128,0.4);
+    color: var(--neon-pink);
+    padding: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .play-btn:hover {
+    background: rgba(255,0,128,0.15);
+    box-shadow: 0 0 16px rgba(255,0,128,0.3);
+  }
+
+  /* OVERLAY + MODAL */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay.active { display: flex; }
+
+  .modal {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,245,255,0.3);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    animation: modalIn 0.35s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: translateY(-30px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #667799;
+    font-size: 22px;
+    cursor: pointer;
+    font-family: monospace;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--neon-pink); }
+
+  .modal-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 15px rgba(0,245,255,0.6);
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: 3px;
+  }
+
+  .modal-logo span { color: var(--neon-pink); }
+
+  .modal-sub {
+    text-align: center;
+    color: #667799;
+    font-size: 13px;
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+  }
+
+  .tabs {
+    display: flex;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(0,245,255,0.15);
+  }
+
+  .tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px;
+    color: #667799;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active {
+    color: var(--neon-cyan);
+    border-bottom-color: var(--neon-cyan);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    color: #8899bb;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .form-group input {
+    width: 100%;
+    background: rgba(0,245,255,0.04);
+    border: 1px solid rgba(0,245,255,0.2);
+    color: var(--text-main);
+    padding: 12px 16px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-group input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 12px rgba(0,245,255,0.2);
+  }
+
+  .form-group input::placeholder { color: #445566; }
+
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    border: none;
+    color: white;
+    padding: 14px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 8px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,0,128,0.45);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(0,245,255,0.15);
+  }
+
+  .divider span { font-size: 12px; color: #445566; letter-spacing: 1px; }
+
+  .social-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .social-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #8899bb;
+    padding: 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+
+  .social-btn:hover { background: rgba(255,255,255,0.08); color: #d0d8f0; }
+
+  .modal-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #445566;
+    letter-spacing: 0.5px;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(0,245,255,0.12);
+    padding: 30px 60px;
+    text-align: center;
+    color: #334455;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    nav ul { display: none; }
+    .section { padding: 50px 20px; }
+    .stats { gap: 30px; padding: 30px 20px; }
+    .modal { padding: 28px 22px; margin: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">NEON<span>ARENA</span></div>
+  <ul>
+    <li><a href="#">Games</a></li>
+    <li><a href="#">Tournaments</a></li>
+    <li><a href="#">Leaderboard</a></li>
+    <li><a href="#">Store</a></li>
+  </ul>
+  <button class="nav-login-btn" onclick="openModal()">Login / Sign Up</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">&#9654; Season 7 Live Now</div>
+  <h1>Battle Beyond<br>Limits</h1>
+  <p>Duniya ke top gamers ke saath compete karo. Tournaments jito. Legend bano.</p>
+  <div class="hero-buttons">
+    <button class="btn-primary" onclick="openModal()">Abhi Join Karo</button>
+    <button class="btn-secondary" onclick="openModal()">Login Karo</button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-number">2.4M+</div>
+    <div class="stat-label">Active Players</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">₹50L</div>
+    <div class="stat-label">Prize Pool</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">340+</div>
+    <div class="stat-label">Daily Tournaments</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">18ms</div>
+    <div class="stat-label">Avg Latency</div>
+  </div>
+</div>
+
+<!-- GAMES -->
+<section class="section">
+  <h2 class="section-title">Featured <span>Games</span></h2>
+  <p class="section-sub">Apna favourite game choose karo aur battle shuru karo</p>
+  <div class="games-grid">
+
+    <div class="game-card">
+      <div class="game-icon" style="background:rgba(255,0,128,0.15);">🔫</div>
+      <h3>WarZone Elite</h3>
+      <p>Battle Royale 100 players. Last man standing wins.</p>
+      <div class="game-tag">Battle Royale</div>
+      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon" style="background:rgba(0,245,255,0.12);">⚔️</div>
+      <h3>Shadow Strike</h3>
+      <p>5v5 tactical shooter — strategy aur skill dono chahiye.</p>
+      <div class="game-tag">Tactical FPS</div>
+      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon" style="background:rgba(139,0,255,0.15);">🏎️</div>
+      <h3>Turbo Drift</h3>
+      <p>Hyper-speed racing on neon tracks. Drift to victory.</p>
+      <div class="game-tag">Racing</div>
+      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <div class="game-icon" style="background:rgba(0,255,128,0.12);">🧙</div>
+      <h3>Realm Breaker</h3>
+      <p>MOBA format mein duniya ke best ke saath compete karo.</p>
+      <div class="game-tag">MOBA</div>
+      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 NeonArena. Sabhi rights reserved. &nbsp;|&nbsp; Privacy &nbsp;|&nbsp; Terms
+</footer>
+
+<!-- LOGIN OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeOnOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+
+    <div class="modal-logo">NEON<span>ARENA</span></div>
+    <div class="modal-sub">GAMING PORTAL &mdash; ENTER THE ARENA</div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login', this)">Login</button>
+      <button class="tab-btn" onclick="switchTab('signup', this)">Sign Up</button>
+    </div>
+
+    <!-- LOGIN TAB -->
+    <div class="tab-content active" id="tab-login">
+      <div class="form-group">
+        <label>Username / Email</label>
+        <input type="text" placeholder="apna username daalo">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+      <button class="form-submit">Login &amp; Enter</button>
+      <div class="divider"><span>ya phir</span></div>
+      <div class="social-btns">
+        <button class="social-btn">&#71; Google</button>
+        <button class="social-btn">&#102; Facebook</button>
+      </div>
+      <div class="modal-footer">Password bhool gaye? <a href="#" style="color:var(--neon-cyan);text-decoration:none;">Reset karo</a></div>
+    </div>
+
+    <!-- SIGNUP TAB -->
+    <div class="tab-content" id="tab-signup">
+      <div class="form-group">
+        <label>Gamer Tag</label>
+        <input type="text" placeholder="apna unique naam">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="email@example.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="strong password">
+      </div>
+      <button class="form-submit">Account Banao</button>
+      <div class="divider"><span>ya phir</span></div>
+      <div class="social-btns">
+        <button class="social-btn">&#71; Google</button>
+        <button class="social-btn">&#102; Facebook</button>
+      </div>
+      <div class="modal-footer">Account hai? <a href="#" onclick="switchTabByName('login')" style="color:var(--neon-cyan);text-decoration:none;">Login karo</a></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeOnOutside(e) {
+    if (e.target === document.getElementById('overlay')) closeModal();
+  }
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function switchTabByName(name) {
+    const btns = document.querySelectorAll('.tab-btn');
+    const idx = name === 'login' ? 0 : 1;
+    switchTab(name, btns[idx]);
+    return false;
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
