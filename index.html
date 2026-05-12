@@ -1,683 +1,1090 @@
 
+
+<!DOCTYPE html>
 <html lang="hi">
 <head>
+ <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wansh.gaming</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Fantasy11 - IPL Fantasy Game</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* =====================
+     GLOBAL RESET & BASE
+  ===================== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --neon-cyan: #00f5ff;
-    --neon-pink: #ff0080;
-    --neon-purple: #8b00ff;
-    --dark-bg: #050810;
-    --card-bg: #0a0f1e;
-    --text-main: #e0e8ff;
+    --green-dark: #1a472a;
+    --green-mid:  #2e7d32;
+    --green-light:#e8f5e9;
+    --gold:       #f9a825;
+    --gold-light: #fff9c4;
+    --red:        #c62828;
+    --bg:         #f4f6f8;
+    --card-bg:    #ffffff;
+    --text:       #1c1c1e;
+    --text-muted: #6b7280;
+    --border:     #e5e7eb;
+    --radius-sm:  8px;
+    --radius-md:  12px;
+    --radius-lg:  16px;
+    --shadow:     0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg:  0 8px 32px rgba(0,0,0,0.12);
   }
 
   body {
-    background: var(--dark-bg);
-    font-family: 'Rajdhani', sans-serif;
-    color: var(--text-main);
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    overflow-x: hidden;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
   }
 
-  /* Animated grid background */
-  body:
+  /* =====================
+     HEADER
+  ===================== */
+  .header {
+    background: linear-gradient(135deg, #1a472a 0%, #2e7d32 100%);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 16px rgba(26,71,42,0.3);
+  }
+  .header-logo { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  .header-logo span { color: var(--gold); }
+  .wallet-badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+  }
+  .wallet-badge:hover { background: rgba(255,255,255,0.28); }
 
-  /* NAVBAR */
-  nav {
-    position: relative;
-    z-index: 10;
+  /* =====================
+     BOTTOM NAV
+  ===================== */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    z-index: 50;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 10px 4px 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+  .nav-btn .nav-icon { font-size: 22px; line-height: 1; }
+  .nav-btn.active { color: var(--green-dark); }
+  .nav-btn.active .nav-dot {
+    width: 4px; height: 4px;
+    background: var(--green-dark);
+    border-radius: 50%;
+    margin-top: -2px;
+  }
+
+  /* =====================
+     PAGES
+  ===================== */
+  .page { display: none; padding: 14px 14px 80px; }
+  .page.active { display: block; }
+
+  /* =====================
+     MATCH CARDS
+  ===================== */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 4px 0 10px;
+  }
+
+  .match-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .match-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 60px;
-    border-bottom: 1px solid rgba(0,245,255,0.2);
-    background: rgba(5,8,16,0.85);
-    backdrop-filter: blur(10px);
+    margin-bottom: 14px;
   }
-
-  .logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 20px rgba(0,245,255,0.8);
-    letter-spacing: 3px;
-  }
-
-  .logo span { color: var(--neon-pink); text-shadow: 0 0 20px rgba(255,0,128,0.8); }
-
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 32px;
-  }
-
-  nav ul li a {
-    color: #8899bb;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    transition: color 0.3s;
-  }
-
-  nav ul li a:hover { color: var(--neon-cyan); }
-
-  .nav-login-btn {
-    background: transparent;
-    border: 1.5px solid var(--neon-cyan);
-    color: var(--neon-cyan);
-    padding: 10px 28px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    transition: all 0.3s;
-    text-transform: uppercase;
-  }
-
-  .nav-login-btn:hover {
-    background: rgba(0,245,255,0.15);
-    box-shadow: 0 0 20px rgba(0,245,255,0.5);
-  }
-
-  /* HERO */
-  .hero {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 100px 20px 60px;
-  }
-
-  .hero-badge {
-    display: inline-block;
-    background: rgba(255,0,128,0.15);
-    border: 1px solid rgba(255,0,128,0.4);
-    color: var(--neon-pink);
-    padding: 6px 20px;
+  .match-meta-left { font-size: 12px; color: var(--text-muted); }
+  .timer-pill {
+    background: #fff3e0;
+    color: #e65100;
+    border-radius: 20px;
+    padding: 4px 10px;
     font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
     font-weight: 600;
   }
-
-  .hero h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(36px, 7vw, 80px);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, var(--neon-cyan) 50%, var(--neon-purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero p {
-    font-size: 18px;
-    color: #8899bb;
-    max-width: 500px;
-    margin: 0 auto 40px;
-    line-height: 1.6;
-  }
-
-  .hero-buttons {
+  .teams-row {
     display: flex;
-    gap: 16px;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .team-block { text-align: center; flex: 1; }
+  .team-emoji { font-size: 36px; line-height: 1; display: block; }
+  .team-code  { font-size: 15px; font-weight: 700; margin-top: 5px; }
+  .vs-text    { font-size: 14px; font-weight: 700; color: var(--text-muted); }
+  .info-chips {
+    display: flex;
+    gap: 8px;
     flex-wrap: wrap;
+    margin-bottom: 12px;
   }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-    border: none;
-    color: white;
-    padding: 16px 40px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    transition: all 0.3s;
-    text-transform: uppercase;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255,0,128,0.5);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    border: 1.5px solid rgba(0,245,255,0.5);
-    color: var(--neon-cyan);
-    padding: 16px 40px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    transition: all 0.3s;
-    text-transform: uppercase;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(0,245,255,0.1);
-    box-shadow: 0 0 20px rgba(0,245,255,0.3);
-  }
-
-  /* STATS */
-  .stats {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    padding: 40px 60px;
-    border-top: 1px solid rgba(0,245,255,0.1);
-    border-bottom
-  }
-
-  .section-title span { color: var(--neon-cyan); }
-
-  .section-sub {
-    color: #667799;
-    font-size: 15px;
-    margin-bottom: 40px;
-    letter-spacing: 1px;
-  }
-
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-  }
-
-  .game-card {
-    background: var(--card-bg);
-    border: 1px solid rgba(0,245,255,0.12);
-    padding: 24px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-  }
-
-  .game-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,245,255,0.05), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .game-card:hover { border-color: rgba(0,245,255,0.4); transform: translateY(-4px); }
-  .game-card:hover::before { opacity: 1; }
-
-  .game-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-  }
-
-  .game-card h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #d0d8f0;
-  }
-
-  .game-card p { font-size: 13px; color: #667799; line-height: 1.5; margin-bottom: 16px; }
-
-  .game-tag {
-    display: inline-block;
-    background: rgba(0,245,255,0.1);
-    border: 1px solid rgba(0,245,255,0.25);
-    color: var(--neon-cyan);
-    padding: 3px 12px;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+  .chip {
+    background: var(--green-light);
+    color: var(--green-dark);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 12px;
     font-weight: 600;
   }
-
-  .play-btn {
+  .join-btn {
     width: 100%;
-    margin-top: 16px;
-    background: transparent;
-    border: 1px solid rgba(255,0,128,0.4);
-    color: var(--neon-pink);
-    padding: 10px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s;
-  }
-
-  .play-btn:hover {
-    background: rgba(255,0,128,0.15);
-    box-shadow: 0 0 16px rgba(255,0,128,0.3);
-  }
-
-  /* OVERLAY + MODAL */
-  .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(6px);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .overlay.active { display: flex; }
-
-  .modal {
-    background: var(--card-bg);
-    border: 1px solid rgba(0,245,255,0.3);
-    width: 100%;
-    max-width: 420px;
-    padding: 40px;
-    position: relative;
-    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-    animation: modalIn 0.35s ease;
-  }
-
-  @keyframes modalIn {
-    from { transform: translateY(-30px) scale(0.95); opacity: 0; }
-    to { transform: translateY(0) scale(1); opacity: 1; }
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    background: none;
+    background: var(--green-dark);
+    color: white;
     border: none;
-    color: #667799;
-    font-size: 22px;
-    cursor: pointer;
-    font-family: monospace;
-    transition: color 0.2s;
-  }
-
-  .modal-close:hover { color: var(--neon-pink); }
-
-  .modal-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 15px rgba(0,245,255,0.6);
-    text-align: center;
-    margin-bottom: 6px;
-    letter-spacing: 3px;
-  }
-
-  .modal-logo span { color: var(--neon-pink); }
-
-  .modal-sub {
-    text-align: center;
-    color: #667799;
-    font-size: 13px;
-    margin-bottom: 32px;
-    letter-spacing: 1px;
-  }
-
-  .tabs {
-    display: flex;
-    margin-bottom: 28px;
-    border-bottom: 1px solid rgba(0,245,255,0.15);
-  }
-
-  .tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
+    border-radius: var(--radius-md);
     padding: 12px;
-    color: #667799;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s;
-    margin-bottom: -1px;
-  }
-
-  .tab-btn.active {
-    color: var(--neon-cyan);
-    border-bottom-color: var(--neon-cyan);
-  }
-
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  .form-group { margin-bottom: 18px; }
-
-  .form-group label {
-    display: block;
-    font-size: 12px;
-    color: #8899bb;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-
-  .form-group input {
-    width: 100%;
-    background: rgba(0,245,255,0.04);
-    border: 1px solid rgba(0,245,255,0.2);
-    color: var(--text-main);
-    padding: 12px 16px;
-    font-family: 'Rajdhani', sans-serif;
     font-size: 15px;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
   }
+  .join-btn:hover  { background: #153d22; }
+  .join-btn:active { transform: scale(0.98); }
 
-  .form-group input:focus {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 12px rgba(0,245,255,0.2);
-  }
-
-  .form-group input::placeholder { color: #445566; }
-
-  .form-submit {
-    width: 100%;
-    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-    border: none;
+  /* =====================
+     WALLET PAGE
+  ===================== */
+  .wallet-hero {
+    background: linear-gradient(135deg, #1a472a, #2e7d32);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
     color: white;
-    padding: 14px;
-    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+  .wallet-hero .wh-label { font-size: 13px; opacity: 0.8; margin-bottom: 6px; }
+  .wallet-hero .wh-amount { font-size: 40px; font-weight: 700; letter-spacing: -1px; }
+  .wallet-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .wallet-split-box {
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    text-align: center;
+  }
+  .wallet-split-box .ws-label  { font-size: 11px; opacity: 0.8; }
+  .wallet-split-box .ws-amount { font-size: 20px; font-weight: 700; margin-top: 2px; }
+
+  .card-section {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .card-section h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .amt-chip {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 6px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.15s;
+    background: var(--card-bg);
+    color: var(--text);
+  }
+  .amt-chip:hover   { border-color: var(--green-dark); color: var(--green-dark); background: var(--green-light); }
+  .amt-chip.selected{ border-color: var(--green-dark); color: var(--green-dark); background: var(--green-light); }
+
+  .money-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .money-input:focus { border-color: var(--green-dark); }
+
+  .action-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-bottom: 8px;
+  }
+  .action-btn:active { transform: scale(0.98); }
+  .btn-add      { background: var(--green-dark); color: white; }
+  .btn-add:hover{ background: #153d22; }
+  .btn-withdraw {
+    background: transparent;
+    border: 2px solid var(--green-dark);
+    color: var(--green-dark);
+  }
+  .btn-withdraw:hover { background: var(--green-light); }
+
+  /* Transactions */
+  .txn-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .txn-item:last-child { border-bottom: none; }
+  .txn-name  { font-size: 14px; font-weight: 600; }
+  .txn-sub   { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .txn-amt   { font-size: 15px; font-weight: 700; }
+  .amt-green { color: var(--green-mid); }
+  .amt-red   { color: var(--red); }
+  .empty-state {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .empty-icon { font-size: 40px; display: block; margin-bottom: 8px; opacity: 0.4; }
+
+  /* =====================
+     TEAM BUILDER
+  ===================== */
+  .team-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--green-dark);
+    color: white;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+  .team-counter { font-size: 14px; }
+  .team-counter span { font-size: 22px; font-weight: 700; }
+  .team-save-btn {
+    background: var(--gold);
+    color: #333;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 3px;
     cursor: pointer;
-    text-transform: uppercase;
-    margin-top: 8px;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    transition: all 0.3s;
+    transition: opacity 0.2s;
   }
+  .team-save-btn:hover { opacity: 0.88; }
 
-  .form-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255,0,128,0.45);
-  }
-
-  .divider {
+  .role-filter {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 20px 0;
+    gap: 6px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
-
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(0,245,255,0.15);
+  .role-chip {
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    background: var(--card-bg);
+    color: var(--text-muted);
   }
+  .role-chip.active { border-color: var(--green-dark); color: var(--green-dark); background: var(--green-light); }
 
-  .divider span { font-size: 12px; color: #445566; letter-spacing: 1px; }
-
-  .social-btns {
+  .player-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-
-  .social-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #8899bb;
-    padding: 10px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
+  .player-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border);
+    padding: 12px;
     cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-  }
-
-  .social-btn:hover { background: rgba(255,255,255,0.08); color: #d0d8f0; }
-
-  .modal-footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 12px;
-    color: #445566;
-    letter-spacing: 0.5px;
-  }
-
-  /* FOOTER */
-  footer {
+    transition: all 0.15s;
+    box-shadow: var(--shadow);
     position: relative;
-    z-index: 1;
-    border-top: 1px solid rgba(0,245,255,0.12);
-    padding: 30px 60px;
+  }
+  .player-card:hover     { border-color: #a5d6a7; }
+  .player-card.selected  {
+    border-color: var(--green-dark);
+    background: #f0faf3;
+  }
+  .player-emoji  { font-size: 26px; display: block; margin-bottom: 6px; }
+  .player-name   { font-size: 13px; font-weight: 700; line-height: 1.2; }
+  .player-role   { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .player-pts    { font-size: 12px; color: var(--green-dark); font-weight: 700; margin-top: 5px; }
+  .player-team   { font-size: 11px; color: var(--text-muted); }
+  .selected-mark {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 20px; height: 20px;
+    background: var(--green-dark);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+  }
+  .player-card.selected .selected-mark { display: flex; }
+
+  /* =====================
+     RESULTS PAGE
+  ===================== */
+  .result-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
     text-align: center;
-    color: #334455;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .result-trophy   { font-size: 52px; margin-bottom: 12px; }
+  .result-title    { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .result-sub      { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+  .rank-badge {
+    display: inline-block;
+    background: var(--gold-light);
+    border: 1.5px solid var(--gold);
+    color: #e65100;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .win-box {
+    background: var(--green-light);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    border: 1px solid #a5d6a7;
+  }
+  .win-box .wb-label  { font-size: 12px; color: var(--green-dark); font-weight: 600; }
+  .win-box .wb-amount { font-size: 32px; font-weight: 700; color: var(--green-dark); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .stat-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .stat-label  { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-value  { font-size: 20px; font-weight: 700; }
+
+  /* =====================
+     MODAL
+  ===================== */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-bg.open { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 28px 24px 40px;
+    width: 100%;
+    max-width: 480px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .modal-bg.open .modal-box { transform: translateY(0); }
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .modal-body  { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 22px; }
+  .modal-actions { display: flex; gap: 10px; }
+  .modal-actions button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .modal-actions button:hover { opacity: 0.88; }
+  .btn-cancel  { background: var(--bg); color: var(--text); }
+  .btn-ok      { background: var(--green-dark); color: white; }
+
+  /* =====================
+     TOAST
+  ===================== */
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1c1c1e;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 24px;
     font-size: 13px;
-    letter-spacing: 1px;
+    font-weight: 500;
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: all 0.3s;
+    max-width: 90%;
+    text-align: center;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 
-  @media (max-width: 640px) {
-    nav { padding: 14px 20px; }
-    nav ul { display: none; }
-    .section { padding: 50px 20px; }
-    .stats { gap: 30px; padding: 30px 20px; }
-    .modal { padding: 28px 22px; margin: 16px; }
-  }
+  /* =====================
+     SCROLLBAR
+  ===================== */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <div class="logo">NEON<span>ARENA</span></div>
-  <ul>
-    <li><a href="#">Games</a></li>
-    <li><a href="#">Tournaments</a></li>
-    <li><a href="#">Leaderboard</a></li>
-    <li><a href="#">Store</a></li>
-  </ul>
-  <button class="nav-login-btn" onclick="openModal()">Login / Sign Up</button>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">&#9654; Season 7 Live Now</div>
-  <h1>Battle Beyond<br>Limits</h1>
-  <p>Duniya ke top gamers ke saath compete karo. Tournaments jito. Legend bano.</p>
-  <div class="hero-buttons">
-    <button class="btn-primary" onclick="openModal()">Abhi Join Karo</button>
-    <button class="btn-secondary" onclick="openModal()">Login Karo</button>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat-item">
-    <div class="stat-number">2.4M+</div>
-    <div class="stat-label">Active Players</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">₹50L</div>
-    <div class="stat-label">Prize Pool</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">340+</div>
-    <div class="stat-label">Daily Tournaments</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">18ms</div>
-    <div class="stat-label">Avg Latency</div>
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="header-logo">🏏 Fantasy<span>11</span></div>
+  <div class="wallet-badge" onclick="showPage('wallet')" id="wallet-badge">
+    💰 <span id="header-balance">₹0</span>
   </div>
 </div>
 
-<!-- GAMES -->
-<section class="section">
-  <h2 class="section-title">Featured <span>Games</span></h2>
-  <p class="section-sub">Apna favourite game choose karo aur battle shuru karo</p>
-  <div class="games-grid">
+<!-- ===== MATCHES PAGE ===== -->
+<div class="page active" id="page-matches">
+  <div class="section-title">Today's Matches</div>
 
-    <div class="game-card">
-      <div class="game-icon" style="background:rgba(255,0,128,0.15);">🔫</div>
-      <h3>WarZone Elite</h3>
-      <p>Battle Royale 100 players. Last man standing wins.</p>
-      <div class="game-tag">Battle Royale</div>
-      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+  <!-- Match 1 -->
+  <div class="match-card">
+    <div class="match-meta">
+      <div class="match-meta-left">IPL 2026 • Match 42</div>
+      <div class="timer-pill">⏰ 2h 30m baki</div>
     </div>
-
-    <div class="game-card">
-      <div class="game-icon" style="background:rgba(0,245,255,0.12);">⚔️</div>
-      <h3>Shadow Strike</h3>
-      <p>5v5 tactical shooter — strategy aur skill dono chahiye.</p>
-      <div class="game-tag">Tactical FPS</div>
-      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    <div class="teams-row">
+      <div class="team-block">
+        <span class="team-emoji">🦁</span>
+        <div class="team-code">MI</div>
+      </div>
+      <div class="vs-text">VS</div>
+      <div class="team-block">
+        <span class="team-emoji">🦅</span>
+        <div class="team-code">CSK</div>
+      </div>
     </div>
-
-    <div class="game-card">
-      <div class="game-icon" style="background:rgba(139,0,255,0.15);">🏎️</div>
-      <h3>Turbo Drift</h3>
-      <p>Hyper-speed racing on neon tracks. Drift to victory.</p>
-      <div class="game-tag">Racing</div>
-      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
+    <div class="info-chips">
+      <div class="chip">🏆 Prize: ₹50,000</div>
+      <div class="chip">Entry: ₹49</div>
+      <div class="chip">Spots: 1,000</div>
     </div>
-
-    <div class="game-card">
-      <div class="game-icon" style="background:rgba(0,255,128,0.12);">🧙</div>
-      <h3>Realm Breaker</h3>
-      <p>MOBA format mein duniya ke best ke saath compete karo.</p>
-      <div class="game-tag">MOBA</div>
-      <button class="play-btn" onclick="openModal()">&#9654; Play Now</button>
-    </div>
-
+    <button class="join-btn" onclick="openJoinModal('MI vs CSK', 49, 50000)">
+      Contest Join Karo — ₹49
+    </button>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  &copy; 2025 NeonArena. Sabhi rights reserved. &nbsp;|&nbsp; Privacy &nbsp;|&nbsp; Terms
-</footer>
-
-<!-- LOGIN OVERLAY -->
-<div class="overlay" id="overlay" onclick="closeOnOutside(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">&#10005;</button>
-
-    <div class="modal-logo">NEON<span>ARENA</span></div>
-    <div class="modal-sub">GAMING PORTAL &mdash; ENTER THE ARENA</div>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('login', this)">Login</button>
-      <button class="tab-btn" onclick="switchTab('signup', this)">Sign Up</button>
+  <!-- Match 2 -->
+  <div class="match-card">
+    <div class="match-meta">
+      <div class="match-meta-left">IPL 2026 • Match 43</div>
+      <div class="timer-pill">⏰ 5h 15m baki</div>
     </div>
-
-    <!-- LOGIN TAB -->
-    <div class="tab-content active" id="tab-login">
-      <div class="form-group">
-        <label>Username / Email</label>
-        <input type="text" placeholder="apna username daalo">
+    <div class="teams-row">
+      <div class="team-block">
+        <span class="team-emoji">🏰</span>
+        <div class="team-code">DC</div>
       </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="••••••••">
+      <div class="vs-text">VS</div>
+      <div class="team-block">
+        <span class="team-emoji">🌟</span>
+        <div class="team-code">RCB</div>
       </div>
-      <button class="form-submit">Login &amp; Enter</button>
-      <div class="divider"><span>ya phir</span></div>
-      <div class="social-btns">
-        <button class="social-btn">&#71; Google</button>
-        <button class="social-btn">&#102; Facebook</button>
-      </div>
-      <div class="modal-footer">Password bhool gaye? <a href="#" style="color:var(--neon-cyan);text-decoration:none;">Reset karo</a></div>
     </div>
-
-    <!-- SIGNUP TAB -->
-    <div class="tab-content" id="tab-signup">
-      <div class="form-group">
-        <label>Gamer Tag</label>
-        <input type="text" placeholder="apna unique naam">
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="email@example.com">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="strong password">
-      </div>
-      <button class="form-submit">Account Banao</button>
-      <div class="divider"><span>ya phir</span></div>
-      <div class="social-btns">
-        <button class="social-btn">&#71; Google</button>
-        <button class="social-btn">&#102; Facebook</button>
-      </div>
-      <div class="modal-footer">Account hai? <a href="#" onclick="switchTabByName('login')" style="color:var(--neon-cyan);text-decoration:none;">Login karo</a></div>
+    <div class="info-chips">
+      <div class="chip">🏆 Prize: ₹25,000</div>
+      <div class="chip">Entry: ₹29</div>
+      <div class="chip">Spots: 500</div>
     </div>
+    <button class="join-btn" onclick="openJoinModal('DC vs RCB', 29, 25000)">
+      Contest Join Karo — ₹29
+    </button>
+  </div>
 
+  <!-- Match 3 -->
+  <div class="match-card">
+    <div class="match-meta">
+      <div class="match-meta-left">IPL 2026 • Match 44</div>
+      <div class="timer-pill">⏰ 8h baki</div>
+    </div>
+    <div class="teams-row">
+      <div class="team-block">
+        <span class="team-emoji">🦩</span>
+        <div class="team-code">RR</div>
+      </div>
+      <div class="vs-text">VS</div>
+      <div class="team-block">
+        <span class="team-emoji">🦈</span>
+        <div class="team-code">KKR</div>
+      </div>
+    </div>
+    <div class="info-chips">
+      <div class="chip">🏆 Prize: ₹10,000</div>
+      <div class="chip">Entry: ₹19</div>
+      <div class="chip">Spots: 200</div>
+    </div>
+    <button class="join-btn" onclick="openJoinModal('RR vs KKR', 19, 10000)">
+      Contest Join Karo — ₹19
+    </button>
   </div>
 </div>
 
+<!-- ===== MY TEAM PAGE ===== -->
+<div class="page" id="page-myteam">
+  <div class="team-header-bar">
+    <div class="team-counter">
+      Selected: <span id="sel-count">0</span>/11
+    </div>
+    <button class="team-save-btn" onclick="saveTeam()">Team Save Karo ✓</button>
+  </div>
+
+  <div class="role-filter">
+    <div class="role-chip active" onclick="filterRole('All', this)">All Players</div>
+    <div class="role-chip" onclick="filterRole('Wicket-keeper', this)">🧤 WK</div>
+    <div class="role-chip" onclick="filterRole('Batsman', this)">🏏 Batsman</div>
+    <div class="role-chip" onclick="filterRole('All-rounder', this)">⚡ All-rounder</div>
+    <div class="role-chip" onclick="filterRole('Bowler', this)">🎯 Bowler</div>
+  </div>
+
+  <div class="player-grid" id="player-grid">
+    <!-- JS se bhara jayega -->
+  </div>
+</div>
+
+<!-- ===== RESULTS PAGE ===== -->
+<div class="page" id="page-results">
+  <div id="results-content">
+    <div class="result-card" style="padding: 40px 20px;">
+      <div class="result-trophy" style="opacity:0.35;">🏆</div>
+      <div class="result-title" style="color:var(--text-muted);">Abhi koi result nahi</div>
+      <p style="color:var(--text-muted);font-size:14px;margin-top:8px;">
+        Matches mein join karo, result yahan dikhega!
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WALLET PAGE ===== -->
+<div class="page" id="page-wallet">
+
+  <!-- Hero Balance -->
+  <div class="wallet-hero">
+    <div class="wh-label">Mera Balance</div>
+    <div class="wh-amount" id="wallet-balance">₹0</div>
+    <div class="wallet-split">
+      <div class="wallet-split-box">
+        <div class="ws-label">💵 Added Cash</div>
+        <div class="ws-amount" id="w-added">₹0</div>
+      </div>
+      <div class="wallet-split-box">
+        <div class="ws-label">🏆 Winnings</div>
+        <div class="ws-amount" id="w-winning">₹0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Money -->
+  <div class="card-section">
+    <h3>💰 Paisa Add Karo</h3>
+    <div class="amount-grid">
+      <div class="amt-chip" onclick="pickAmt(50,this)">₹50</div>
+      <div class="amt-chip" onclick="pickAmt(100,this)">₹100</div>
+      <div class="amt-chip" onclick="pickAmt(250,this)">₹250</div>
+      <div class="amt-chip" onclick="pickAmt(500,this)">₹500</div>
+      <div class="amt-chip" onclick="pickAmt(1000,this)">₹1,000</div>
+      <div class="amt-chip" onclick="pickAmt(2000,this)">₹2,000</div>
+    </div>
+    <input
+      class="money-input"
+      type="number"
+      id="custom-input"
+      placeholder="Ya apna amount likhiye..."
+      oninput="customAmt(this.value)"
+    />
+    <button class="action-btn btn-add" onclick="addMoney()">+ Paisa Add Karo</button>
+    <button class="action-btn btn-withdraw" onclick="withdrawMoney()">↑ Withdraw (Bank / UPI)</button>
+  </div>
+
+  <!-- Transactions -->
+  <div class="card-section">
+    <h3>📋 Transactions</h3>
+    <div id="txn-list">
+      <div class="empty-state">
+        <span class="empty-icon">📄</span>
+        Koi transaction nahi hai abhi
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('matches')" id="nav-matches">
+    <span class="nav-icon">🏏</span>Matches
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-btn" onclick="showPage('myteam')" id="nav-myteam">
+    <span class="nav-icon">👥</span>My Team
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-btn" onclick="showPage('results')" id="nav-results">
+    <span class="nav-icon">🏆</span>Results
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-btn" onclick="showPage('wallet')" id="nav-wallet">
+    <span class="nav-icon">💰</span>Wallet
+    <div class="nav-dot"></div>
+  </button>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title">Contest Join Karo</div>
+    <div class="modal-body"  id="modal-body">Loading...</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-ok"     id="modal-ok-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+
+<!-- ===== JAVASCRIPT ===== -->
 <script>
-  function openModal() {
-    document.getElementById('overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
+/* -----------------------------------------------
+   DATA — Players ki list
+----------------------------------------------- */
+const ALL_PLAYERS = [
+  // MI
+  { id:1, name:'Rohit Sharma',        role:'Batsman',       team:'MI', emoji:'🦁', cr:'9.5' },
+  { id:2, name:'Suryakumar Yadav',    role:'Batsman',       team:'MI', emoji:'🦁', cr:'9.0' },
+  { id:3, name:'Ishan Kishan',        role:'Wicket-keeper', team:'MI', emoji:'🦁', cr:'8.5' },
+  { id:4, name:'Hardik Pandya',       role:'All-rounder',   team:'MI', emoji:'🦁', cr:'9.0' },
+  { id:5, name:'Jasprit Bumrah',      role:'Bowler',        team:'MI', emoji:'🦁', cr:'9.5' },
+  { id:6, name:'Tilak Varma',         role:'Batsman',       team:'MI', emoji:'🦁', cr:'8.0' },
+  // CSK
+  { id:7, name:'MS Dhoni',            role:'Wicket-keeper', team:'CSK', emoji:'🦅', cr:'9.5' },
+  { id:8, name:'Ruturaj Gaikwad',     role:'Batsman',       team:'CSK', emoji:'🦅', cr:'8.5' },
+  { id:9, name:'Ravindra Jadeja',     role:'All-rounder',   team:'CSK', emoji:'🦅', cr:'9.0' },
+  { id:10, name:'Shivam Dube',        role:'All-rounder',   team:'CSK', emoji:'🦅', cr:'8.0' },
+  { id:11, name:'Deepak Chahar',      role:'Bowler',        team:'CSK', emoji:'🦅', cr:'7.5' },
+  { id:12, name:'Matheesha Pathirana',role:'Bowler',        team:'CSK', emoji:'🦅', cr:'8.0' },
+];
+
+/* -----------------------------------------------
+   STATE — App ka data
+----------------------------------------------- */
+const state = {
+  balance:    0,
+  added:      0,
+  winnings:   0,
+  selAmt:     0,
+  selPlayers: new Set(),
+  transactions: [],
+  currentRole: 'All',
+  pendingAction: null,
+};
+
+/* -----------------------------------------------
+   UTILITY FUNCTIONS
+----------------------------------------------- */
+function rupee(n) {
+  return '₹' + Number(n).toLocaleString('en-IN');
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* -----------------------------------------------
+   NAVIGATION
+----------------------------------------------- */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+}
+
+/* -----------------------------------------------
+   BALANCE DISPLAY UPDATE
+----------------------------------------------- */
+function updateDisplay() {
+  document.getElementById('header-balance').textContent  = rupee(state.balance);
+  document.getElementById('wallet-balance').textContent  = rupee(state.balance);
+  document.getElementById('w-added').textContent         = rupee(state.added);
+  document.getElementById('w-winning').textContent       = rupee(state.winnings);
+}
+
+/* -----------------------------------------------
+   WALLET — Amount pick & add
+----------------------------------------------- */
+function pickAmt(amt, el) {
+  state.selAmt = amt;
+  document.querySelectorAll('.amt-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('custom-input').value = amt;
+}
+
+function customAmt(v) {
+  state.selAmt = parseInt(v) || 0;
+  document.querySelectorAll('.amt-chip').forEach(c => c.classList.remove('selected'));
+}
+
+function addMoney() {
+  const amt = state.selAmt || parseInt(document.getElementById('custom-input').value) || 0;
+  if (amt < 10) { toast('❌ Minimum ₹10 add karo'); return; }
+
+  // ⭐ REAL APP: Yahan Razorpay / PhonePe payment gateway lagao
+  // Example: razorpay.open() ya UPI intent call
+
+  state.balance += amt;
+  state.added   += amt;
+  addTxn('💵 Cash Added', 'UPI / Debit Card se', amt, true);
+  updateDisplay();
+  document.getElementById('custom-input').value = '';
+  document.querySelectorAll('.amt-chip').forEach(c => c.classList.remove('selected'));
+  state.selAmt = 0;
+  toast('✅ ' + rupee(amt) + ' wallet mein add ho gaya!');
+}
+
+function withdrawMoney() {
+  if (state.winnings < 50) {
+    toast('❌ Minimum ₹50 winnings chahiye withdraw ke liye');
+    return;
+  }
+  openModal(
+    '↑ Withdraw Karo',
+    rupee(state.winnings) + ' aapke registered bank/UPI account mein bheja jaayega. 24 ghante lagenge.',
+    'Withdraw Karo',
+    () => {
+      const w = state.winnings;
+      state.balance  -= w;
+      state.winnings  = 0;
+      addTxn('🏦 Withdrawn', 'Bank / UPI mein bheja', w, false);
+      updateDisplay();
+      toast('✅ ' + rupee(w) + ' aapke account mein aa jayega!');
+    }
+  );
+}
+
+/* -----------------------------------------------
+   TRANSACTIONS
+----------------------------------------------- */
+function addTxn(label, sub, amt, isCredit) {
+  state.transactions.unshift({ label, sub, amt, isCredit, time: new Date() });
+  renderTxns();
+}
+
+function renderTxns() {
+  const list = document.getElementById('txn-list');
+  if (!state.transactions.length) {
+    list.innerHTML = `<div class="empty-state"><span class="empty-icon">📄</span>Koi transaction nahi hai abhi</div>`;
+    return;
+  }
+  list.innerHTML = state.transactions.map(t => `
+    <div class="txn-item">
+      <div>
+        <div class="txn-name">${t.label}</div>
+        <div class="txn-sub">${t.sub}</div>
+      </div>
+      <div class="txn-amt ${t.isCredit ? 'amt-green' : 'amt-red'}">
+        ${t.isCredit ? '+' : '-'}${rupee(t.amt)}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* -----------------------------------------------
+   CONTEST JOIN
+----------------------------------------------- */
+function openJoinModal(match, entry, prize) {
+  if (state.balance < entry) {
+    toast('❌ Balance kam hai! Pehle paisa add karo.');
+    showPage('wallet');
+    return;
+  }
+  openModal(
+    '🏏 ' + match,
+    `Entry fee: ${rupee(entry)}\nPrize pool: ${rupee(prize)}\n\nKya aap is contest mein join karna chahte hain?`,
+    'Join — ' + rupee(entry),
+    () => confirmJoin(match, entry, prize)
+  );
+}
+
+function confirmJoin(match, entry, prize) {
+  state.balance -= entry;
+  state.added    = Math.max(0, state.added - entry);
+  addTxn('🏏 Contest Joined', match, entry, false);
+  updateDisplay();
+  toast('✅ Contest join ho gaya! Ab team select karo.');
+  renderPlayers();
+  showPage('myteam');
+
+  // 4 second baad result simulate karo
+  setTimeout(() => simulateResult(match, entry, prize), 4000);
+}
+
+/* -----------------------------------------------
+   RESULT SIMULATION
+   Real app mein: server se actual match data aayega
+----------------------------------------------- */
+function simulateResult(match, entry, prize) {
+  const rank    = Math.floor(Math.random() * 200) + 1;
+  let winAmt    = 0;
+  let emoji     = '😤';
+  let msg       = 'Agli baar aur accha karenge!';
+
+  if      (rank <= 1)  { winAmt = Math.floor(prize * 0.25); emoji = '🥇'; msg = 'Shatru No.1!'; }
+  else if (rank <= 3)  { winAmt = Math.floor(prize * 0.12); emoji = '🥈'; msg = 'Top 3 mein!'; }
+  else if (rank <= 10) { winAmt = Math.floor(prize * 0.05); emoji = '🎯'; msg = 'Top 10 mein!'; }
+  else if (rank <= 30) { winAmt = Math.floor(prize * 0.01); emoji = '🎉'; msg = 'Chhoti jeet!'; }
+
+  if (winAmt > 0) {
+    state.balance  += winAmt;
+    state.winnings += winAmt;
+    addTxn('🏆 Contest Winning', match + ' — Rank #' + rank, winAmt, true);
+    updateDisplay();
   }
 
-  function closeModal() {
-    document.getElementById('overlay').classList.remove('active');
-    document.body.style.overflow = '';
-  }
+  // Results page update
+  document.getElementById('results-content').innerHTML = `
+    <div class="result-card">
+      <div class="result-trophy">${emoji}</div>
+      <div class="result-title">${msg}</div>
+      <div class="result-sub">${match}</div>
+      <div class="rank-badge">🏅 Rank #${rank} / 1,000</div>
+      ${winAmt > 0
+        ? `<div class="win-box">
+             <div class="wb-label">Aapki Jeet 🎊</div>
+             <div class="wb-amount">${rupee(winAmt)}</div>
+           </div>`
+        : `<p style="color:var(--text-muted);font-size:14px;">
+             Is baar nahi mila — agli baar try karo!
+           </p>`
+      }
+    </div>
 
-  function closeOnOutside(e) {
-    if (e.target === document.getElementById('overlay')) closeModal();
-  }
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-label">Match</div>
+        <div class="stat-value" style="font-size:14px;">${match}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Aapka Rank</div>
+        <div class="stat-value">#${rank}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Entry Fee</div>
+        <div class="stat-value">${rupee(entry)}</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Jeet</div>
+        <div class="stat-value" style="color:${winAmt>0?'var(--green-mid)':'var(--red)'};">
+          ${rupee(winAmt)}
+        </div>
+      </div>
+    </div>
+  `;
 
-  function switchTab(name, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + name).classList.add('active');
-  }
+  toast(winAmt > 0
+    ? '🎉 Badhaai! ' + rupee(winAmt) + ' jeet gaye!'
+    : '😤 Better luck next time!');
+}
 
-  function switchTabByName(name) {
-    const btns = document.querySelectorAll('.tab-btn');
-    const idx = name === 'login' ? 0 : 1;
-    switchTab(name, btns[idx]);
-    return false;
-  }
+/* -----------------------------------------------
+   TEAM BUILDER — Players render & filter
+----------------------------------------------- */
+function renderPlayers() {
+  const role = state.currentRole;
+  const list = role === 'All'
+    ? ALL_PLAYERS
+    : ALL_PLAYERS.filter(p => p.role === role);
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('player-grid').innerHTML = list.map(p => `
+    <div
+      class="player-card ${state.selPlayers.has(p.id) ? 'selected' : ''}"
+      id="pcard-${p.id}"
+      onclick="togglePlayer(${p.id})"
+    >
+      <div class="selected-mark">✓</div>
+      <span class="player-emoji">${p.emoji}</span>
+      <div class="player-name">${p.name}</div>
+      <div class="player-role">${p.role}</div>
+      <div class="player-pts">${p.cr} CR</div>
+      <div class="player-team">${p.team}</div>
+    </div>
+  `).join('');
+}
+
+function filterRole(role, el) {
+  state.currentRole = role;
+  document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderPlayers();
+}
+
+function togglePlayer(id) {
+  if (state.selPlayers.has(id)) {
+    state.selPlayers.delete(id);
+  } else {
+    if (state.selPlayers.size >= 11) {
+      toast('❌ Maximum 11 players select kar sakte ho');
+      return;
+    }
+    state.selPlayers.add(id);
+  }
+  document.getElementById('sel-count').textContent = state.selPlayers.size;
+  const card = document.getElementById('pcard-' + id);
+  if (card) card.classList.toggle('selected', state.selPlayers.has(id));
+}
+
+function saveTeam() {
+  if (state.selPlayers.size < 11) {
+    toast('❌ Pehle 11 players select karo (' + state.selPlayers.size + '/11)');
+    return;
+  }
+  toast('✅ Team save ho gayi! Ab match ka wait karo.');
+}
+
+/* -----------------------------------------------
+   MODAL
+----------------------------------------------- */
+function openModal(title, body, btnText, onConfirm) {
+  document.getElementById('modal-title').textContent   = title;
+  document.getElementById('modal-body').textContent    = body;
+  document.getElementById('modal-ok-btn').textContent  = btnText;
+  document.getElementById('modal-ok-btn').onclick      = () => {
+    closeModal();
+    onConfirm();
+  };
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-bg')) {
+    document.getElementById('modal-bg').classList.remove('open');
+  }
+}
+
+/* -----------------------------------------------
+   INIT
+----------------------------------------------- */
+renderPlayers();
+updateDisplay();
 </script>
 </body>
-</html>
+
